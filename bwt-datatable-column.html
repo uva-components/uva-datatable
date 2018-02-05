@@ -108,7 +108,8 @@ This element is used inside of `<paper-datatable>` to declare the columns to be 
 					sortDirection: {
 						type: String,
 						value: 'asc',
-						observer: '_sortChanged'
+						observer: '_sortChanged',
+                                                notify: true
 					},
 					/**
 					 * If `type` is a simple type, then if this is true one of the default editable
