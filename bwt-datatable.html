@@ -9,8 +9,9 @@
 <link rel="import" href="../iron-media-query/iron-media-query.html">
 <link rel="import" href="../iron-scroll-target-behavior/iron-scroll-target-behavior.html">
 
-<script src="./src/weakCache.js"></script>
-<script src="./src/collectionHelpers.js"></script>
+<link rel="import" href="./src/weakCache.html">
+<link rel="import" href="./src/collectionHelpers.html">
+
 <dom-module id="paper-datatable">
 	<template>
 		<custom-style>
@@ -241,9 +242,9 @@
 				/*CSS for mobile view*/
 
 				/* Force table to not be like tables anymore */
-				table[mobile-view], thead[mobile-view], tbody[mobile-view], th[mobile-view], td[mobile-view], tr[mobile-view] { 
+				table[mobile-view], thead[mobile-view], tbody[mobile-view], th[mobile-view], td[mobile-view], tr[mobile-view] {
 					display: block;
-						
+
 				}
 
 				tbody[mobile-view]{
@@ -251,17 +252,17 @@
 				}
 
 				/* Hide table headers (but not display: none;, for accessibility) */
-				thead tr[mobile-view] { 
+				thead tr[mobile-view] {
 					position: absolute;
 					top: -9999px;
 					left: -9999px;
 				}
-					
-				tr[mobile-view] { 
-					border: 1px solid #ccc; 
+
+				tr[mobile-view] {
+					border: 1px solid #ccc;
 				}
-					
-				td[mobile-view] { 
+
+				td[mobile-view] {
 					border: none;
 					border-bottom:none !important;
 					position: relative;
@@ -285,7 +286,7 @@
 				}
 
 				tr[mobile-view]:hover td {
-					background: none; 
+					background: none;
 				}
 
 				tr[mobile-view] td[mobile-view] div p.mobileHeader{
@@ -295,7 +296,7 @@
 				.fixedToTop {
 					background: #fff;
 					position: fixed !important;
-					box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2);					
+					box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 					top: 0;
 					z-index: 1;
 				}
@@ -693,7 +694,7 @@
 							var cells = Polymer.dom(row).querySelectorAll('.bound-cell');
 							var self = this;
 							cells.forEach(function(cell, index) {
-						
+
 								if(!cell.dataColumn){
 									console.log(cell);
 								}
@@ -701,7 +702,7 @@
 								var isEmpty = cell.hasAttribute('data-empty');
 								var isWrongRow = cell.getAttribute('data-row-key') !== row.dataset.key;
 								var isWrongColumn = cell.dataColumn !== cell.dataBoundColumn;
-								
+
 								if(cell){
 									cell.removeAttribute('data-empty');
 									var prop = cell.dataColumn.property;
@@ -752,7 +753,7 @@
 					if(change.path === 'data'){
 						//not too happy about this 'hack', but it will have to do for the moment
 						var cells = this.shadowRoot.querySelectorAll('.bound-cell');
-							Array.prototype.forEach.call(cells, function(cell) { 
+							Array.prototype.forEach.call(cells, function(cell) {
 								cell.setAttribute('data-row-key', '');
 							});
 							this._restructureData();
@@ -873,7 +874,7 @@
 							allChecked = false;
 						}
 					}.bind(this));
-					return allChecked && this.data.length > 0;	
+					return allChecked && this.data.length > 0;
 				},
 
 				_someChecked: function(){
@@ -968,7 +969,7 @@
 								direction: column.sortDirection
 							}, column: column
 						}
-						var triggeredEvent = this._fireCustomEvent(this, "sort", eventBody); 
+						var triggeredEvent = this._fireCustomEvent(this, "sort", eventBody);
 
 						this.set('_currentlySortedColumn', column);
 
@@ -1046,7 +1047,7 @@
 						var item = this._getByKey(rowModel.rowKey);
 						var eventBody = {column: ev.model.column, key:rowModel.rowKey, item:item, target: ev.target, originalEvent: ev}
 						this._fireCustomEvent(ev.model.column, "cell-tap", eventBody, { bubbles: true, composed: true });
-						
+
 						if(ev.model.column.dialog){
 							this._initializeInDialog(cell, ev.model.column, item, rowModel.rowKey);
 							var dialogInitialized = true;
@@ -1159,7 +1160,7 @@
 						var tableHead = this.shadowRoot.querySelector('thead');
 						if (this._scrollTop > this._theadDistanseToTop && !tableHead.classList.contains("fixedToTop")) {
 							/*Get first table row*/
-							var firstRow = this.shadowRoot.querySelector('tbody tr');	
+							var firstRow = this.shadowRoot.querySelector('tbody tr');
 							var firstRowCells = Polymer.dom(firstRow).querySelectorAll('.bound-cell');
 							if (firstRowCells.length === 0) return;
 							var headerWidth = getComputedStyle(tableHead).width;
@@ -1171,7 +1172,7 @@
 							});
 							if (this._headerHeight) {
 								tableHead.style.top = this._headerHeight + "px";
-							} 
+							}
 							this.$.container.style.marginTop = tableHead.offsetHeight + "px";
 							tableHead.style.width = headerWidth;
 							tableHead.classList.add("fixedToTop");
@@ -1193,9 +1194,9 @@
 						if (parentNodeName.toLowerCase() === 'paper-datatable-card' && this.parentNode.headerFixed) {
 							var header = Polymer.dom(this.parentNode.root).querySelector('#topBlock');
 							this._headerHeight = header.offsetHeight;
-							this._theadDistanseToTop = thead.getBoundingClientRect().top - this._headerHeight;					
+							this._theadDistanseToTop = thead.getBoundingClientRect().top - this._headerHeight;
 						} else {
-							this._theadDistanseToTop = thead.getBoundingClientRect().top;											
+							this._theadDistanseToTop = thead.getBoundingClientRect().top;
 						}
 					}
 				},
